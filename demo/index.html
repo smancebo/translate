@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="translateTest">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+
+    <p>
+      {{::('L_CHOOSE_LANGUAGE' | translate)}}
+    </p>
+    <select ng-model="form.selectedLanguage" ng-change="changeLanguage()" ng-options="lang as lang.description for lang in Languages">
+      <option value="">{{::('L_CHOOSE' | translate)}}</option>
+    </select>
+
+    <p>
+      <label>{{::('L_NAME' | translate)}}</label>
+      <input type='text' />
+    </p>
+    <p>
+      <label>{{::('L_LASTNAME' | translate)}}</label>
+      <input type='text' />
+    </p>
+    <p>
+      <label>{{::('L_ADDRESS' | translate)}}</label>
+      <input type='text' />
+    </p>
+    <p>
+      <label>{{::('L_AGE' | translate)}}</label>
+      <input type='text' />
+    </p>
+
+    <button>
+      {{::('L_ADD_PERSON' | translate)}}
+    </button>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/translate/translate.js"></script>
+    <script src="app/app.js"></script>
+  </body>
+</html>

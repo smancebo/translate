@@ -1,0 +1,9 @@
+{
+  "L_NAME" : "Nombre",
+  "L_LASTNAME" : "Apellido",
+  "L_ADDRESS" : "Direccion",
+  "L_AGE" : "Edad",
+  "L_ADD_PERSON" : "Agregar Persona",
+  "L_CHOOSE" : "Seleccionar...",
+  "L_CHOOSE_LANGUAGE" : "Seleccione el Idioma"
+}
