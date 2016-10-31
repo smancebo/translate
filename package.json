@@ -1,0 +1,27 @@
+{
+  "name": "translate",
+  "version": "1.0.0",
+  "description": "Angular Filter for string management",
+  "main": "translate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smancebo/translate.git"
+  },
+  "author": "Samuel J Mancebo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smancebo/translate/issues"
+  },
+  "homepage": "https://github.com/smancebo/translate#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1"
+  }
+}

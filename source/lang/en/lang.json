@@ -1,0 +1,11 @@
+
+{
+    "L_AGREGAR" : "Add",
+    "L_DOC_IDENTIDAD": "ID",
+    "L_NOMBRE": "Name",
+    "L_DIRECCION": "Address",
+    "L_TELEFONO": "Phone",
+    "L_CELULAR": "Cell Phone",
+    "L_NOTAS": "Notes",
+    "L_SELECCIONE" : "Choose..."
+}
