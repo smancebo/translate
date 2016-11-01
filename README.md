@@ -1,8 +1,18 @@
 # Translate
 
 
-Translate is an [AngularJS](https://https://github.com/angular/angular.js) filter for easily managing multiple languages string in your app.
-string are managed using a simple folder structure where the languages files are placed.
+### Installation
+
+#### via Bower
+
+```
+bower install --save-dev angular-safe.translate
+```
+
+### Description
+
+Translate is an [AngularJS](https://https://github.com/angular/angular.js) filter for easily managing multiple languages strings in your app.
+strings are managed using a simple folder structure where the languages files are placed.
 
 <pre>
 lang
@@ -133,8 +143,8 @@ $rootScope.getString('L_NAME');
 ```
 * `$rootScope.form.selectedLanguages` - _Object_ : This is a object representing the current selected languages (you need to assing this value using a `ngModel`)
 
-* `$rootScope.changeLanguage` - _Function_ : This is a function used for changing the selected language, this is the value inside the $rootScope.form.selectedLanguages.id
-* `$rootScope.reloadLanguage(lang)` - _Function_ : This is a function used for changing the selected language, unlike `$rootScope.changeLanguage` this recibe the lang id from params
+* `$rootScope.changeLanguage` - _Function_ : This is a function used for changing the selected language, this use the value inside the $rootScope.form.selectedLanguages.id
+* `$rootScope.reloadLanguage(lang)` - _Function_ : This is a function used for changing the selected language, unlike `$rootScope.changeLanguage` this recibe the lang id from a parameter
 ```javascript
 $rootScope.reloadLanguage('es');
 //this will change the selected language to 'es'
