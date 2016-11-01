@@ -1,0 +1,24 @@
+{
+  "name": "angular-safe.translate",
+  "description": "AngularJs filter for easily managing multiple languages strings",
+  "main": "source/translate.js",
+  "authors": [
+    "Samuel J Mancebo"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "translate",
+    "angular-translate",
+    "safe.translate",
+    "angular-safe.translate",
+    "i18n"
+  ],
+  "homepage": "https://github.com/smancebo/translate",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
