@@ -1,7 +1,7 @@
 # Translate
 
 
-### Installation
+## Installation
 
 #### via Bower
 
@@ -9,7 +9,7 @@
 bower install --save-dev angular-safe.translate
 ```
 
-### Description
+## Description
 
 Translate is an [AngularJS](https://https://github.com/angular/angular.js) filter for easily managing multiple languages strings in your app.
 strings are managed using a simple folder structure where the languages files are placed.
