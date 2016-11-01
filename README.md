@@ -68,6 +68,7 @@ es/lang.json
 
 ## Usage
 
+> Full working example inside the _"demo"_ folder in this repo
 
 app.js
 
