@@ -55,19 +55,39 @@
     function translateServiceProvider() {
 
         var __langPath = 'lang';
+        var __defaultLang = 'en';
+
         this.setLangPath = setLangPath;
+        this.setDefaultLanguage = setDefaultLanguage;
+        this.getString = getString;
         this.$get = $get;
 
         function setLangPath(newLangPath) {
             __langPath = newLangPath;
         }
 
+        function setDefaultLanguage(lang){
+          __defaultLang = lang;
+        }
+
+        function getString(tagName){
+          if (localStorage.safeLang) {
+
+              var lang = JSON.parse(localStorage.safeLang);
+              if (lang === undefined) {
+                  translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
+                      return l[tagName];
+                  });
+              } else {
+                  return lang[tagName] || "TAG NOT FOUND";
+              }
+          }
+        }
+
         $get.$inject = ['$q'];
         function $get($q) {
             return translateService($q);
         }
-
-
 
         function translateService($q) {
 
@@ -78,7 +98,7 @@
                     if (localStorage.safeLangConfig) {
                         lang = localStorage.safeLangConfig;
                     } else {
-                        lang = 'en';
+                        lang = __defaultLang;
                     }
                 }
 
@@ -130,10 +150,24 @@
               return defered.promise;
             }
 
+            function getString(tagName){
+              if (localStorage.safeLang) {
+
+                  var lang = JSON.parse(localStorage.safeLang);
+                  if (lang === undefined) {
+                      translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
+                          return l[tagName];
+                      });
+                  } else {
+                      return lang[tagName] || "TAG NOT FOUND";
+                  }
+              }
+            }
 
             return {
                 loadLanguage: loadLanguage,
-                loadAvailableLanguages: loadAvailableLanguages
+                loadAvailableLanguages: loadAvailableLanguages,
+                getString: getString
             };
         }
     }
