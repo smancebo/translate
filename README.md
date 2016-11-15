@@ -140,16 +140,18 @@ When `Translate` is loaded it register some functions and objects in the Angular
 * `$rootScope.getString(str)` - _Function_ : This is for using translate inside _services_ and/or controllers
 ```javascript
 $rootScope.getString('L_NAME');
-//this returns value of the 'L_NAME' key for the selected language
+//this will return the value of the 'L_NAME' key for the selected language
 ```
 * `$rootScope.form.selectedLanguages` - _Object_ : This is a object representing the current selected languages (you need to assing this value using a `ngModel`)
 
 * `$rootScope.changeLanguage` - _Function_ : This is a function used for changing the selected language, this use the value inside the $rootScope.form.selectedLanguages.id
 * `$rootScope.reloadLanguage(lang)` - _Function_ : This is a function used for changing the selected language, unlike `$rootScope.changeLanguage` this recibe the lang id from a parameter
+
 ```javascript
 $rootScope.reloadLanguage('es');
 //this will change the selected language to 'es'
 ```
+
 
 ## TranslateServiceProvider
 
@@ -166,6 +168,39 @@ $rootScope.reloadLanguage('es');
     configFn.$inject = ['translateServiceProvider'];
     function configFn(translateServiceProvider){
       translateServiceProvider.setLangPath('bower_components/translate/lang');
+    }
+
+})(window.angular);
+```
+
+* `translateServiceProvider.setDefaultLanguage(lang)` - _Function_ : This function is used to change the default language (en), this is usefull when starting the app for the first time.
+
+```javascript
+(function(angular) {
+
+    angular.module('translateTest', ['safe.translate'])
+    .config(configFn);
+
+    configFn.$inject = ['translateServiceProvider'];
+    function configFn(translateServiceProvider){
+      translateServiceProvider.setDefaultLanguage('es');
+    }
+
+})(window.angular);
+```
+
+* `translateServiceProvider.getString(tagName)` - _Function_ : This is for using translate inside __config__ block
+
+```javascript
+(function(angular) {
+
+    angular.module('translateTest', ['safe.translate'])
+    .config(configFn);
+
+    configFn.$inject = ['translateServiceProvider'];
+    function configFn(translateServiceProvider){
+      translateServiceProvider.getString('L_NAME');
+      //this will return value of the 'L_NAME' key for the selected language
     }
 
 })(window.angular);
