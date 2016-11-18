@@ -4,6 +4,7 @@ var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
 
 
 
@@ -16,8 +17,10 @@ gulp.task('default',['build-translate','watch:translate']);
 
 gulp.task('build-translate', function(){
   return gulp.src(Paths.translate)
+  .pipe(sourcemaps.init())
   .pipe(uglify())
   .pipe(rename({suffix: '.min'}))
+  .pipe(sourcemaps.write())
   .pipe(gulp.dest('source'));
 });
 

@@ -7,7 +7,7 @@
     function configFn(translateServiceProvider){
       translateServiceProvider.setLangPath('bower_components/translate/lang');
       translateServiceProvider.setDefaultLanguage('es');
-      //console.log(translateServiceProvider.getString('L_CHOOSE_LANGUAGE'));
+      console.log(translateServiceProvider.getString('L_CHOOSE_LANGUAGE'));
     }
 
 })(window.angular);

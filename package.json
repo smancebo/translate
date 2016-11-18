@@ -20,6 +20,7 @@
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.2",
     "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^2.0.0",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1"
