@@ -13,42 +13,43 @@
         .filter('translate', translate);
 
 
-    runFn.$inject = ['$rootScope','translateService', '$filter'];
+    runFn.$inject = ['$rootScope', 'translateService', '$filter'];
+
     function runFn($rootScope, translateService, $filter) {
 
-      translateService.loadLanguage(localStorage.safeLangConfig).then(function(lang) {
-          $rootScope.lang = lang;
-      });
+        translateService.loadLanguage(localStorage.safeLangConfig).then(function(lang) {
+            $rootScope.lang = lang;
+        });
 
-      $rootScope.form = {};
-      if (localStorage.langObj === undefined || localStorage.langObj === "") localStorage.langObj = '{"description" : "ENGLISH", "langid" : "en"}';
+        $rootScope.form = {};
+        if (localStorage.langObj === undefined || localStorage.langObj === "") localStorage.langObj = '{"description" : "ENGLISH", "langid" : "en"}';
 
-      $rootScope.form.selectedLanguage = JSON.parse(localStorage.langObj);
-      translateService.loadAvailableLanguages().then(function(languages) {
+        $rootScope.form.selectedLanguage = JSON.parse(localStorage.langObj);
+        translateService.loadAvailableLanguages().then(function(languages) {
 
-          $rootScope.Languages = languages;
-          $rootScope.translate = function(text) {
-              return $rootScope.lang[text];
-          };
-          $rootScope.getString = function(str){
-            return $filter('translate')(str);
-          };
-          $rootScope.changeLanguage = function() {
-              var lang = $rootScope.form.selectedLanguage.id;
-              localStorage.langObj = JSON.stringify($rootScope.form.selectedLanguage);
-              translateService.loadLanguage(lang).then(function() {
-                  location = location.pathname;
-              });
-          };
-          $rootScope.reloadLanguage = function(lang) {
+            $rootScope.Languages = languages;
+            $rootScope.translate = function(text) {
+                return $rootScope.lang[text];
+            };
+            $rootScope.getString = function(str) {
+                return $filter('translate')(str);
+            };
+            $rootScope.changeLanguage = function() {
+                var lang = $rootScope.form.selectedLanguage.id;
+                localStorage.langObj = JSON.stringify($rootScope.form.selectedLanguage);
+                translateService.loadLanguage(lang).then(function() {
+                    location = location.pathname;
+                });
+            };
+            $rootScope.reloadLanguage = function(lang) {
 
-              delete localStorage.safeLang;
-              delete localStorage.safeLangConfig;
-              delete localStorage.langObj;
-              $rootScope.form.selectedLanguage.id = lang;
-              $rootScope.changeLanguage();
-          };
-      });
+                delete localStorage.safeLang;
+                delete localStorage.safeLangConfig;
+                delete localStorage.langObj;
+                $rootScope.form.selectedLanguage.id = lang;
+                $rootScope.changeLanguage();
+            };
+        });
     }
 
 
@@ -66,25 +67,26 @@
             __langPath = newLangPath;
         }
 
-        function setDefaultLanguage(lang){
-          __defaultLang = lang;
+        function setDefaultLanguage(lang) {
+            __defaultLang = lang;
         }
 
-        function getString(tagName){
-          if (localStorage.safeLang) {
+        function getString(tagName) {
+            if (localStorage.safeLang) {
 
-              var lang = JSON.parse(localStorage.safeLang);
-              if (lang === undefined) {
-                  translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
-                      return l[tagName];
-                  });
-              } else {
-                  return lang[tagName] || "TAG NOT FOUND";
-              }
-          }
+                var lang = JSON.parse(localStorage.safeLang);
+                if (lang === undefined) {
+                    translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
+                        return l[tagName];
+                    });
+                } else {
+                    return lang[tagName] || "TAG NOT FOUND";
+                }
+            }
         }
 
         $get.$inject = ['$q'];
+
         function $get($q) {
             return translateService($q);
         }
@@ -105,19 +107,34 @@
                 var request = new XMLHttpRequest();
                 request.open('GET', __langPath + '/' + lang + '/lang.json');
                 request.onload = function() {
+                    try {
+                        var langConfig = JSON.parse(request.responseText);
+                        localStorage.safeLang = JSON.stringify(langConfig);
+                        localStorage.safeLangConfig = lang;
+                        defered.resolve(langConfig);
+                    } catch (e) {
+                        defered.reject(e);
+                    }
 
-                    if (request.status >= 200 && request.status < 400) {
-                        try {
-                            var langConfig = JSON.parse(request.responseText);
-                            localStorage.safeLang = JSON.stringify(langConfig);
-                            localStorage.safeLangConfig = lang;
-                            defered.resolve(langConfig);
-                        } catch (e) {
-                            defered.reject(e);
-                        }
+                    defered.reject(request);
 
-                    } else {
-                        defered.reject(request);
+                };
+                request.send();
+
+                return defered.promise;
+            }
+
+            function loadAvailableLanguages() {
+                var defered = $q.defer();
+
+                var request = new XMLHttpRequest();
+                request.open('GET', __langPath + '/languages.json');
+                request.onload = function() {
+                    try {
+                        var languages = JSON.parse(request.responseText);
+                        defered.resolve(languages);
+                    } catch (e) {
+                        defered.reject(e);
                     }
                 };
                 request.send();
@@ -125,43 +142,18 @@
                 return defered.promise;
             }
 
-            function loadAvailableLanguages(){
-              var defered  = $q.defer();
+            function getString(tagName) {
+                if (localStorage.safeLang) {
 
-              var request = new XMLHttpRequest();
-              request.open('GET', __langPath + '/languages.json');
-              request.onload = function() {
-
-                  if (request.status >= 200 && request.status < 400) {
-                    try{
-                      var languages = JSON.parse(request.responseText);
-                      defered.resolve(languages);
+                    var lang = JSON.parse(localStorage.safeLang);
+                    if (lang === undefined) {
+                        translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
+                            return l[tagName];
+                        });
+                    } else {
+                        return lang[tagName] || "TAG NOT FOUND";
                     }
-                    catch(e){
-                      defered.reject(e);
-                    }
-                  }
-                  else {
-                    defered.reject(request);
-                  }
-              };
-              request.send();
-
-              return defered.promise;
-            }
-
-            function getString(tagName){
-              if (localStorage.safeLang) {
-
-                  var lang = JSON.parse(localStorage.safeLang);
-                  if (lang === undefined) {
-                      translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
-                          return l[tagName];
-                      });
-                  } else {
-                      return lang[tagName] || "TAG NOT FOUND";
-                  }
-              }
+                }
             }
 
             return {
@@ -173,21 +165,22 @@
     }
 
     translate.$inject = ['translateService'];
-    function translate(translateService){
 
-      return function(input) {
-          if (localStorage.safeLang) {
+    function translate(translateService) {
 
-              var lang = JSON.parse(localStorage.safeLang);
-              if (lang === undefined) {
-                  translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
-                      return l[input];
-                  });
-              } else {
-                  return lang[input] || "TAG NOT FOUND";
-              }
-          }
-      };
+        return function(input) {
+            if (localStorage.safeLang) {
+
+                var lang = JSON.parse(localStorage.safeLang);
+                if (lang === undefined) {
+                    translateService.loadLanguage(localStorage.safeLangConfig).then(function(l) {
+                        return l[input];
+                    });
+                } else {
+                    return lang[input] || "TAG NOT FOUND";
+                }
+            }
+        };
     }
 
 })(window.angular, window.localStorage);
